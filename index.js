@@ -6,7 +6,7 @@ require('dotenv').config({
 });
 
 module.exports = {
-    onInit: ({ utils }) => {
+    onPreBuild: ({ utils }) => {
         console.info(`🔑 Auth0 Plugin startup 🔑`);
         const tab = '   ';
         const requiredEnvVariables = [
