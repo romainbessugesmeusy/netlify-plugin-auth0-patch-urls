@@ -1,0 +1,31 @@
+{
+  "name": "netlify-plugin-auth0-patch-urls",
+  "version": "1.0.0",
+  "description": "A Netlify Build plugin that makes Auth0 works with deploy previews",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romainbessugesmeusy/netlify-plugin-auth0-patch-urls.git"
+  },
+  "keywords": [
+    "netlify",
+    "netlify-plugin",
+    "auth0"
+  ],
+  "author": "Romain Bessuges-Meusy <romainbessuges@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/romainbessugesmeusy/netlify-plugin-auth0-patch-urls/issues"
+  },
+  "homepage": "https://github.com/romainbessugesmeusy/netlify-plugin-auth0-patch-urls#readme",
+  "dependencies": {
+    "auth0": "^2.25.1",
+    "dotenv": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=8.3.0"
+  }
+}
