@@ -33,6 +33,10 @@ module.exports = {
         return new Promise(resolve => {
             const url = process.env.DEPLOY_URL;
             console.log(`${tab} 🧭 Deploy Preview URL should be:`, url);
+            const deployPrimeUrl = process.env.DEPLOY_PRIME_URL;
+            if (deployPrimeUrl) {
+                console.log(`${tab} 🧭 Deploy Preview Prime URL should be:`, deployPrimeUrl);
+            }
 
             const management = new ManagementClient({
                 domain: process.env.AUTH0_DOMAIN,
@@ -47,19 +51,29 @@ module.exports = {
                     console.info(`${tab} 🗝 Retrieved Auth0 client:`, client.name);
                     if (client.allowed_clients.indexOf(url) === -1) {
                         console.info(`${tab} URL has not yet been added to Auth0 Client`);
+                        const getComposeUrls = (envKey, urlToUse) => urlToUse
+                            ? process.env[envKey].split(',').map(
+                                pathname => `${urlToUse}/${pathname}`,
+                            )
+                            : [];
+                        const urlOrigins = deployPrimeUrl
+                            ? [url, deployPrimeUrl]
+                            : [url];
                         const payload = {
-                            allowed_clients: client.allowed_clients.concat([url]),
-                            web_origins: client.web_origins.concat([url]),
-                            allowed_origins: client.allowed_origins.concat([url]),
+                            allowed_clients: client.allowed_clients.concat(urlOrigins),
+                            web_origins: client.web_origins.concat(urlOrigins),
+                            allowed_origins: client.allowed_origins.concat(urlOrigins),
                             callbacks: client.callbacks.concat(
-                                process.env.AUTH0_CALLBACK_PATHNAMES.split(',').map(
-                                    pathname => `${url}/${pathname}`,
-                                ),
+                                [
+                                    ...getComposeUrls('AUTH0_CALLBACK_PATHNAMES', url)
+                                    ...getComposeUrls('AUTH0_CALLBACK_PATHNAMES', deployPrimeUrl)
+                                ]
                             ),
                             allowed_logout_urls: client.callbacks.concat(
-                                process.env.AUTH0_LOGOUT_PATHNAMES.split(',').map(
-                                    pathname => `${url}/${pathname}`,
-                                ),
+                                [
+                                    ...getComposeUrls('AUTH0_LOGOUT_PATHNAMES', url)
+                                    ...getComposeUrls('AUTH0_LOGOUT_PATHNAMES', deployPrimeUrl)
+                                ]
                             ),
                         };
                         management.clients.update(
