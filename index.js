@@ -50,8 +50,8 @@ module.exports = {
                         console.info(`${tab} URL has not yet been added to Auth0 Client`);
                         const payload = {
                             allowed_clients: client.allowed_clients.concat([url]),
-                            web_origins: client.allowed_clients.concat([url]),
-                            allowed_origins: client.allowed_clients.concat([url]),
+                            web_origins: client.web_origins.concat([url]),
+                            allowed_origins: client.allowed_origins.concat([url]),
                             callbacks: client.callbacks.concat(
                                 process.env.AUTH0_CALLBACK_PATHNAMES.split(',').map(
                                     pathname => `${url}/${pathname}`,
