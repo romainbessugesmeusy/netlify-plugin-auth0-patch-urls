@@ -1,6 +1,6 @@
 {
   "name": "netlify-plugin-auth0-patch-urls",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Netlify Build plugin that makes Auth0 works with deploy previews",
   "main": "index.js",
   "scripts": {
