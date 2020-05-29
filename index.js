@@ -13,7 +13,6 @@ module.exports = {
             'AUTH0_DOMAIN',
             'AUTH0_MANAGEMENT_CLIENT_ID',
             'AUTH0_MANAGEMENT_CLIENT_SECRET',
-            'AUTH0_MANAGEMENT_CLIENT_SECRET',
             'GATSBY_AUTH0_CLIENTID',
             'AUTH0_CALLBACK_PATHNAMES',
             'AUTH0_LOGOUT_PATHNAMES',
