@@ -59,22 +59,23 @@ module.exports = {
                         const urlOrigins = deployPrimeUrl
                             ? [url, deployPrimeUrl]
                             : [url];
+                        const getArrayWithUniqueValues = arr => [...new Set(arr)];
                         const payload = {
-                            allowed_clients: client.allowed_clients.concat(urlOrigins),
-                            web_origins: client.web_origins.concat(urlOrigins),
-                            allowed_origins: client.allowed_origins.concat(urlOrigins),
-                            callbacks: client.callbacks.concat(
+                            allowed_clients: getArrayWithUniqueValues(client.allowed_clients.concat(urlOrigins)),
+                            web_origins: getArrayWithUniqueValues(client.web_origins.concat(urlOrigins)),
+                            allowed_origins: getArrayWithUniqueValues(client.allowed_origins.concat(urlOrigins)),
+                            callbacks: getArrayWithUniqueValues(client.callbacks.concat(
                                 [
                                     ...getComposeUrls('AUTH0_CALLBACK_PATHNAMES', url)
                                     ...getComposeUrls('AUTH0_CALLBACK_PATHNAMES', deployPrimeUrl)
                                 ]
-                            ),
-                            allowed_logout_urls: client.callbacks.concat(
+                            )),
+                            allowed_logout_urls: getArrayWithUniqueValues(client.callbacks.concat(
                                 [
                                     ...getComposeUrls('AUTH0_LOGOUT_PATHNAMES', url)
                                     ...getComposeUrls('AUTH0_LOGOUT_PATHNAMES', deployPrimeUrl)
                                 ]
-                            ),
+                            )),
                         };
                         management.clients.update(
                             { client_id: process.env.GATSBY_AUTH0_CLIENTID },
