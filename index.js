@@ -79,7 +79,7 @@ module.exports = {
                 ])
               ),
               allowed_logout_urls: getArrayWithUniqueValues(
-                client.callbacks.concat([
+                client.allowed_logout_urls.concat([
                   ...getComposeUrls("AUTH0_LOGOUT_PATHNAMES", url),
                   ...getComposeUrls("AUTH0_LOGOUT_PATHNAMES", deployPrimeUrl),
                 ])
