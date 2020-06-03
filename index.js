@@ -45,52 +45,53 @@ module.exports = {
         scope: "read:clients update:clients",
       });
 
-      management.clients.get(process.env.AUTH0_CLIENT_ID).then((clients) => {
-        const client = clients.filter(c => c.client_id === process.env.AUTH0_CLIENT_ID);
-        console.log(`${tab} 🗝 Retrieved Auth0 client: ${client.name}`);
+      management.clients
+        .get({ client_id: process.env.AUTH0_CLIENT_ID })
+        .then((client) => {
+          console.log(`${tab} 🗝 Retrieved Auth0 client: ${client.name}`);
 
-        // Handles empty value https://github.com/romainbessugesmeusy/netlify-plugin-auth0-patch-urls/issues/9
-        const clientWebOrigins = client.web_origins || [];
+          // Handles empty value https://github.com/romainbessugesmeusy/netlify-plugin-auth0-patch-urls/issues/9
+          const clientWebOrigins = client.web_origins || [];
 
-        // If a PRIME URL is given by Netlify, we want to add it.
-        // Will be made optional in future release
-        const urlOrigins = deployPrimeUrl
-          ? [deployUrl, deployPrimeUrl]
-          : [deployUrl];
+          // If a PRIME URL is given by Netlify, we want to add it.
+          // Will be made optional in future release
+          const urlOrigins = deployPrimeUrl
+            ? [deployUrl, deployPrimeUrl]
+            : [deployUrl];
 
-        // Urls that need to be added are the ones that are not already in the Client WebOrigins array.
-        const urlsToAdd = urlOrigins.filter(
-          (url) => !clientWebOrigins.includes(url)
-        );
-
-        if (urlsToAdd.length > 0) {
-          console.log(
-            `${tab} Adding URLs to the Auth0 Application Web Origins:`
+          // Urls that need to be added are the ones that are not already in the Client WebOrigins array.
+          const urlsToAdd = urlOrigins.filter(
+            (url) => !clientWebOrigins.includes(url)
           );
-          urlsToAdd.forEach(url => console.log(`${tab} • ${url}`));
-          management.clients.update(
-            { client_id: process.env.AUTH0_CLIENT_ID },
-            { web_origins: clientWebOrigins.concat(urlsToAdd) },
-            (updateError) => {
-              if (updateError) {
-                utils.build.failPlugin(
-                  `${tab} ☠️ Something wrong happened while trying to patch Auth0 Application`
-                );
-              } else {
-                console.log(
-                  `${tab} 🍾 Successfully patched Auth0 Application.`
-                );
+
+          if (urlsToAdd.length > 0) {
+            console.log(
+              `${tab} Adding URLs to the Auth0 Application Web Origins:`
+            );
+            urlsToAdd.forEach((url) => console.log(`${tab} • ${url}`));
+            management.clients.update(
+              { client_id: process.env.AUTH0_CLIENT_ID },
+              { web_origins: clientWebOrigins.concat(urlsToAdd) },
+              (updateError) => {
+                if (updateError) {
+                  utils.build.failPlugin(
+                    `${tab} ☠️ Something wrong happened while trying to patch Auth0 Application`
+                  );
+                } else {
+                  console.log(
+                    `${tab} 🍾 Successfully patched Auth0 Application.`
+                  );
+                }
+                resolve();
               }
-              resolve();
-            }
-          );
-        } else {
-          console.log(
-            `${tab} 👍 URL has already been added to Auth0 Application`
-          );
-          resolve();
-        }
-      });
+            );
+          } else {
+            console.log(
+              `${tab} 👍 URL has already been added to Auth0 Application`
+            );
+            resolve();
+          }
+        });
     });
   },
 };
