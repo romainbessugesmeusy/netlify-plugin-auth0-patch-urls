@@ -23,13 +23,18 @@ Env Variable | Description
 ------------ | --------------
 `AUTH0_DOMAIN` | This is you Aut0 application domain 
 `AUTH0_CLIENT_ID` | Client ID for the SPA Application
-`AUTH0_CALLBACK_PATHNAMES` | Url pathnames that will be appended for callback
-`AUTH0_LOGOUT_PATHNAMES` |Url pathnames that will be appended for logouts
 `AUTH0_MANAGEMENT_CLIENT_ID` |  Client ID of the Management Application
 `AUTH0_MANAGEMENT_CLIENT_SECRET` | Client Secret of the Management Application
 `DEPLOY_URL` | Specified by Netlify build
+`DEPLOY_PRIME_URL` | Specified by Netlify build
 
 These variables have to be defined in your Netlify deployments settings
+
+**Important changes from 1.2.0**
+
+This plugin has been cluttering Auth0 apps by setting absolute URLs for logout, callbacks and CORS. 
+Since 1.2.0, this has been removed in favor of the use of wildcard subdomains, which can be set in
+the Auth0 UI. See https://auth0.com/docs/applications/reference/wildcard-subdomains  
 
 ## Installation 
 
