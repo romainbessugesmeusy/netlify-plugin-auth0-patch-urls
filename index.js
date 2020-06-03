@@ -45,7 +45,8 @@ module.exports = {
         scope: "read:clients update:clients",
       });
 
-      management.clients.get(process.env.AUTH0_CLIENT_ID).then((client) => {
+      management.clients.get(process.env.AUTH0_CLIENT_ID).then((clients) => {
+        const client = clients.filter(c => c.client_id === process.env.AUTH0_CLIENT_ID);
         console.log(`${tab} 🗝 Retrieved Auth0 client: ${client.name}`);
 
         // Handles empty value https://github.com/romainbessugesmeusy/netlify-plugin-auth0-patch-urls/issues/9
