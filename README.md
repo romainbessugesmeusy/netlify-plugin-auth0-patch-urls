@@ -13,7 +13,7 @@ management API. *It basically adds the preview URLs of current Netlify build to 
 1. In order to get it to work properly, it is required to create a Management API token in 
 the APIs section of your Auth0 account, and grant it the `read:clients` and `update:clients` permission.
 
-2. Then you need to create a dedicated Application ("achine to machine") and choose the previously created API in the APIs
+2. Then you need to create a dedicated Application ("machine to machine") and choose the previously created API in the APIs
 tab.
 
 3. Lastly, you have to declare the environment variables that will contain all the client ID and secrets required by this
