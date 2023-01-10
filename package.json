@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/romainbessugesmeusy/netlify-plugin-auth0-patch-urls#readme",
   "dependencies": {
-    "auth0": "^2.25.1",
+    "auth0": "^3.0.1",
     "dotenv": "^8.2.0"
   },
   "engines": {
